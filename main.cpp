@@ -76,12 +76,31 @@ status PostOrderTraverse(BinaryTree &T) { //后序遍历
 }
 
 int Depth(BinaryTree &T) {
-    int m = 0, n = 0;
-    if (T)return 0;
-    m = Depth(T->lchild);
-    n = Depth(T->rchild);
+    if (T == NULL)return 0;
+    int m = Depth(T->lchild);
+    int n = Depth(T->rchild);
     if (m > n) return m + 1;
     else return n + 1;
+}
+
+int Count(BinaryTree &T) {
+    if (T == NULL) return 0;
+    else return Count(T->lchild) + Count(T->rchild) + 1;
+}
+
+int LeafCount(BinaryTree &T) {
+    if (T == NULL) return 1;
+    if (T->rchild == NULL && T->rchild == NULL) {
+        return 1;
+    } else return LeafCount(T->lchild) + LeafCount(T->rchild);
+}
+
+int DegreeWithOne(BinaryTree &T) {
+    if(T==NULL)return 0;
+    if((T->lchild!=NULL&&T->rchild==NULL)||(T->lchild==NULL&&T->rchild!=NULL)){
+        return 1;
+    }
+    else return DegreeWithOne(T->lchild)+DegreeWithOne(T->rchild);
 }
 
 int main() {
@@ -96,5 +115,9 @@ int main() {
     printf("\nPostorderTraverse:\n");
     PostOrderTraverse(node);
     printf("\n");
-    printf("Depth:%d",Depth(node));
+    printf("Depth:%d\n", Depth(node));
+    printf("count:%d\n", Count(node));
+    printf("DegreeWithOne:%d\n",DegreeWithOne(node));
+
+    return OK;
 }
